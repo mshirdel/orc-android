@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidOrc</string>
+    <string name="show_groups">Show Groups</string>
 </resources>
