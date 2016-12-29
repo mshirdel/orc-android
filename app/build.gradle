@@ -32,4 +32,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    // recyclerview
+    compile 'com.android.support:recyclerview-v7:25.0.1'
 }
