@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import io.github.mshirdel.androidorc.Models.Group;
+import io.github.mshirdel.androidorc.Models.Lesson;
 
-public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder> {
+public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.ViewHolder>{
 
-    private List<Group> mItems;
+    private List<Lesson> mItems;
     private Context mContext;
     private PostItemListener mItemListener;
 
@@ -30,21 +30,21 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
 
         @Override
         public void onClick(View view){
-            Group group = getItem(getAdapterPosition());
-            this.mItemListener.onPostClick(group.getId());
+            Lesson lesson = getItem(getAdapterPosition());
+            this.mItemListener.onPostClick(lesson.getId());
 
             notifyDataSetChanged();
         }
     }
 
-    public GroupsAdapter(Context context, List<Group> groups, PostItemListener itemListener){
-        mItems = groups;
+    public LessonsAdapter(Context context, List<Lesson> lessons, PostItemListener itemListener){
+        mItems = lessons;
         mContext = context;
         mItemListener = itemListener;
     }
 
     @Override
-    public GroupsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public LessonsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -55,10 +55,10 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(GroupsAdapter.ViewHolder holder, int position){
-        Group item = mItems.get(position);
+    public void onBindViewHolder(LessonsAdapter.ViewHolder holder, int position){
+        Lesson item = mItems.get(position);
         TextView textView = holder.titleTv;
-        textView.setText(item.getName());
+        textView.setText(item.getTitle());
     }
 
     @Override
@@ -66,16 +66,16 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
         return mItems.size();
     }
 
-    public void updateGroups(List<Group> items){
+    public void updateLessons(List<Lesson> items){
         mItems = items;
         notifyDataSetChanged();
     }
 
-    private Group getItem(int adapterPosition){
+    private Lesson getItem(int adapterPosition){
         return mItems.get(adapterPosition);
     }
 
     public interface PostItemListener {
-        void onPostClick(long id);
+        void onPostClick(Integer id);
     }
 }

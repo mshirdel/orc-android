@@ -3,9 +3,6 @@ package io.github.mshirdel.androidorc.Service;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by meysam on 12/29/16.
- */
 public class RetrofitClient {
 
     private static Retrofit retrofit = null;

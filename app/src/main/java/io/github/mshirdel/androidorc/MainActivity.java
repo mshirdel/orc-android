@@ -1,5 +1,6 @@
 package io.github.mshirdel.androidorc;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,8 +15,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.mshirdel.androidorc.Activity.LessonListActivity;
 import io.github.mshirdel.androidorc.Adapters.GroupsAdapter;
 import io.github.mshirdel.androidorc.Models.Group;
+import io.github.mshirdel.androidorc.Models.Lesson;
 import io.github.mshirdel.androidorc.Service.OrcService;
 import io.github.mshirdel.androidorc.utils.ApiUtils;
 import retrofit2.Call;
@@ -40,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPostClick(long id) {
-                Toast.makeText(MainActivity.this, "Post id is" + id, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Post id is" + id, Toast.LENGTH_SHORT).show();
+                loadLessons(id);
             }
         });
         RecyclerView.LayoutManager layoutManager =  new LinearLayoutManager(this);
@@ -51,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
         mRecycleView.addItemDecoration(itemDecoration);
 
         loadGroups();
+    }
+
+    private void loadLessons(long id){
+        Intent intent = new Intent(this, LessonListActivity.class);
+        intent.putExtra("groupId", (int)id);
+        startActivity(intent);
+
     }
 
     private void loadGroups() {
