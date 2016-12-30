@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import io.github.mshirdel.androidorc.Models.Group;
+import io.github.mshirdel.androidorc.Models.DTO.GroupDTO;
 
 public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder> {
 
-    private List<Group> mItems;
+    private List<GroupDTO> mItems;
     private Context mContext;
     private PostItemListener mItemListener;
 
@@ -30,14 +30,14 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
 
         @Override
         public void onClick(View view){
-            Group group = getItem(getAdapterPosition());
+            GroupDTO group = getItem(getAdapterPosition());
             this.mItemListener.onPostClick(group.getId());
 
             notifyDataSetChanged();
         }
     }
 
-    public GroupsAdapter(Context context, List<Group> groups, PostItemListener itemListener){
+    public GroupsAdapter(Context context, List<GroupDTO> groups, PostItemListener itemListener){
         mItems = groups;
         mContext = context;
         mItemListener = itemListener;
@@ -56,7 +56,7 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(GroupsAdapter.ViewHolder holder, int position){
-        Group item = mItems.get(position);
+        GroupDTO item = mItems.get(position);
         TextView textView = holder.titleTv;
         textView.setText(item.getName());
     }
@@ -66,12 +66,12 @@ public class GroupsAdapter extends RecyclerView.Adapter<GroupsAdapter.ViewHolder
         return mItems.size();
     }
 
-    public void updateGroups(List<Group> items){
+    public void updateGroups(List<GroupDTO> items){
         mItems = items;
         notifyDataSetChanged();
     }
 
-    private Group getItem(int adapterPosition){
+    private GroupDTO getItem(int adapterPosition){
         return mItems.get(adapterPosition);
     }
 

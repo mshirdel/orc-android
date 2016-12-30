@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import io.github.mshirdel.androidorc.Models.Lesson;
+import io.github.mshirdel.androidorc.Models.DTO.LessonDTO;
 
 public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.ViewHolder>{
 
-    private List<Lesson> mItems;
+    private List<LessonDTO> mItems;
     private Context mContext;
     private PostItemListener mItemListener;
 
@@ -30,14 +30,14 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.ViewHold
 
         @Override
         public void onClick(View view){
-            Lesson lesson = getItem(getAdapterPosition());
+            LessonDTO lesson = getItem(getAdapterPosition());
             this.mItemListener.onPostClick(lesson.getId());
 
             notifyDataSetChanged();
         }
     }
 
-    public LessonsAdapter(Context context, List<Lesson> lessons, PostItemListener itemListener){
+    public LessonsAdapter(Context context, List<LessonDTO> lessons, PostItemListener itemListener){
         mItems = lessons;
         mContext = context;
         mItemListener = itemListener;
@@ -56,7 +56,7 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(LessonsAdapter.ViewHolder holder, int position){
-        Lesson item = mItems.get(position);
+        LessonDTO item = mItems.get(position);
         TextView textView = holder.titleTv;
         textView.setText(item.getTitle());
     }
@@ -66,16 +66,16 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.ViewHold
         return mItems.size();
     }
 
-    public void updateLessons(List<Lesson> items){
+    public void updateLessons(List<LessonDTO> items){
         mItems = items;
         notifyDataSetChanged();
     }
 
-    private Lesson getItem(int adapterPosition){
+    private LessonDTO getItem(int adapterPosition){
         return mItems.get(adapterPosition);
     }
 
     public interface PostItemListener {
-        void onPostClick(Integer id);
+        void onPostClick(long id);
     }
 }

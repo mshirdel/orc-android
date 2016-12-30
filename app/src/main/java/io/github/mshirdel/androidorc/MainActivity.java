@@ -1,31 +1,25 @@
 package io.github.mshirdel.androidorc;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.github.mshirdel.androidorc.Activity.LessonListActivity;
 import io.github.mshirdel.androidorc.Adapters.GroupsAdapter;
-import io.github.mshirdel.androidorc.Models.Group;
-import io.github.mshirdel.androidorc.Models.Lesson;
+import io.github.mshirdel.androidorc.Models.DTO.GroupDTO;
 import io.github.mshirdel.androidorc.Service.OrcService;
 import io.github.mshirdel.androidorc.utils.ApiUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mService = ApiUtils.getOrcService();
         mRecycleView = (RecyclerView)findViewById(R.id.rvGroup);
-        mAdapter = new GroupsAdapter(this, new ArrayList<Group>(0), new GroupsAdapter.PostItemListener() {
+        mAdapter = new GroupsAdapter(this, new ArrayList<GroupDTO>(0), new GroupsAdapter.PostItemListener() {
 
             @Override
             public void onPostClick(long id) {
@@ -61,21 +55,22 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LessonListActivity.class);
         intent.putExtra("groupId", (int)id);
         startActivity(intent);
-
     }
 
     private void loadGroups() {
-        mService.listGroup().enqueue(new Callback<List<Group>>() {
+        mService.listGroup().enqueue(new Callback<List<GroupDTO>>() {
             @Override
-            public void onResponse(Call<List<Group>> call, Response<List<Group>> response) {
+            public void onResponse(Call<List<GroupDTO>> call, Response<List<GroupDTO>> response) {
                 if(response.isSuccessful()){
                     mAdapter.updateGroups(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Group>> call, Throwable t) {
-
+            public void onFailure(Call<List<GroupDTO>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.getMessage(),Toast.LENGTH_SHORT ).show();
+                TextView log = (TextView)findViewById(R.id.tvLog);
+                log.setText(t.getMessage());
             }
         });
     }

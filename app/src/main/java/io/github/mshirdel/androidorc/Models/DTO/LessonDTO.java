@@ -1,53 +1,36 @@
-package io.github.mshirdel.androidorc.Models;
+package io.github.mshirdel.androidorc.Models.DTO;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Table(name = "Lessons")
-public class Lesson extends Model {
+public class LessonDTO {
 
     @SerializedName("id")
     @Expose
-    @Column(name= "id", unique = true, onUniqueConflict = Column.ConflictAction.IGNORE)
     private Integer id;
 
     @SerializedName("title")
     @Expose
-    @Column(name="title")
     private String title;
 
     @SerializedName("body")
     @Expose
-    @Column(name="body")
     private String body;
 
     @SerializedName("group_id")
     @Expose
-    @Column(name="group_id")
     private Integer groupId;
 
     @SerializedName("created_at")
     @Expose
-    @Column(name="created_at")
     private String createdAt;
 
     @SerializedName("updated_at")
     @Expose
-    @Column(name="updated_at")
     private String updatedAt;
 
-    @Column(name="Group")
-    private Group group;
-
-    public Lesson(){
-        super();
-    }
-
-    public Group getGroup(){
-        return group;
+    public long getId(){
+        return id;
     }
 
     public String getTitle() {
@@ -91,4 +74,3 @@ public class Lesson extends Model {
     }
 
 }
-

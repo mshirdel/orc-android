@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.mshirdel.androidorc.Adapters.LessonsAdapter;
-import io.github.mshirdel.androidorc.Models.Lesson;
+import io.github.mshirdel.androidorc.Models.DTO.LessonDTO;
 import io.github.mshirdel.androidorc.R;
 import io.github.mshirdel.androidorc.Service.OrcService;
 import io.github.mshirdel.androidorc.utils.ApiUtils;
@@ -36,10 +36,10 @@ public class LessonListActivity extends AppCompatActivity {
         mService = ApiUtils.getOrcService();
         mRecycleView = (RecyclerView)findViewById(R.id.rvLesson);
 
-        mAdapter = new LessonsAdapter(this, new ArrayList<Lesson>(0), new LessonsAdapter.PostItemListener() {
+        mAdapter = new LessonsAdapter(this, new ArrayList<LessonDTO>(0), new LessonsAdapter.PostItemListener() {
 
             @Override
-            public void onPostClick(Integer id) {
+            public void onPostClick(long id) {
                 Toast.makeText(LessonListActivity.this, "Lesson id is" + id, Toast.LENGTH_SHORT).show();
 
             }
@@ -54,17 +54,17 @@ public class LessonListActivity extends AppCompatActivity {
     }
 
     private void loadLessons(Integer groupId) {
-        mService.getGroupLessons(groupId).enqueue(new Callback<List<Lesson>>() {
+        mService.getGroupLessons(groupId).enqueue(new Callback<List<LessonDTO>>() {
             @Override
-            public void onResponse(Call<List<Lesson>> call, Response<List<Lesson>> response) {
+            public void onResponse(Call<List<LessonDTO>> call, Response<List<LessonDTO>> response) {
                 if (response.isSuccessful()) {
                     mAdapter.updateLessons(response.body());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Lesson>> call, Throwable t) {
-
+            public void onFailure(Call<List<LessonDTO>> call, Throwable t) {
+                Toast.makeText(LessonListActivity.this, t.getMessage(),Toast.LENGTH_SHORT ).show();
             }
         });
     }

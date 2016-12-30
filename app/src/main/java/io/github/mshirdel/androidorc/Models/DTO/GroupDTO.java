@@ -1,26 +1,28 @@
-package io.github.mshirdel.androidorc.Models;
+package io.github.mshirdel.androidorc.Models.DTO;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-@Table(name = "Groups")
-public class Group extends Model {
+public class GroupDTO {
 
-    @Column(name= "id", unique = true, onUniqueConflict = Column.ConflictAction.IGNORE)
+    @SerializedName("id")
+    @Expose
     private Integer id;
 
-    @Column(name= "name")
+    @SerializedName("name")
+    @Expose
     private String name;
 
-    @Column(name= "created_at")
+    @SerializedName("created_at")
+    @Expose
     private String createdAt;
 
-    @Column(name="updated_at")
+    @SerializedName("updated_at")
+    @Expose
     private String updatedAt;
 
-    public Group(){
-        super();
+    public long getId(){
+        return id;
     }
 
     public String getName() {
