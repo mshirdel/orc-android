@@ -1,0 +1,1 @@
+ALTER TABLE Lessons ADD COLUMN lesson_id INTEGER;

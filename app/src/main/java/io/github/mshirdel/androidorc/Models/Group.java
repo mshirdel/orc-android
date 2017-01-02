@@ -4,11 +4,16 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.github.mshirdel.androidorc.Models.DTO.GroupDTO;
+
 @Table(name = "Groups")
 public class Group extends Model {
 
-    @Column(name= "id", unique = true, onUniqueConflict = Column.ConflictAction.IGNORE)
-    private Integer id;
+    @Column(name= "group_id")
+    private long groupId;
 
     @Column(name= "name")
     private String name;
@@ -21,6 +26,14 @@ public class Group extends Model {
 
     public Group(){
         super();
+    }
+
+    public long getGroupId(){
+        return groupId;
+    }
+
+    public void setGroupId(long gId){
+        groupId = gId;
     }
 
     public String getName() {
@@ -47,4 +60,11 @@ public class Group extends Model {
         this.updatedAt = updatedAt;
     }
 
+    public static List<GroupDTO> ConvertToDto(List<Group> list){
+        List<GroupDTO> result = new ArrayList<>();
+        for(Group g : list){
+            result.add(new GroupDTO(g.name, g.groupId));
+        }
+        return result;
+    }
 }

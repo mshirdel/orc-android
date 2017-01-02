@@ -6,48 +6,39 @@ import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.github.mshirdel.androidorc.Models.DTO.GroupDTO;
+import io.github.mshirdel.androidorc.Models.DTO.LessonDTO;
+
 @Table(name = "Lessons")
 public class Lesson extends Model {
 
-    @SerializedName("id")
-    @Expose
-    @Column(name= "id", unique = true, onUniqueConflict = Column.ConflictAction.IGNORE)
-    private Integer id;
+    @Column(name="lesson_id")
+    private Integer LessonId;
 
-    @SerializedName("title")
-    @Expose
     @Column(name="title")
     private String title;
 
-    @SerializedName("body")
-    @Expose
     @Column(name="body")
     private String body;
 
-    @SerializedName("group_id")
-    @Expose
     @Column(name="group_id")
     private Integer groupId;
 
-    @SerializedName("created_at")
-    @Expose
     @Column(name="created_at")
     private String createdAt;
 
-    @SerializedName("updated_at")
-    @Expose
     @Column(name="updated_at")
     private String updatedAt;
-
-    @Column(name="Group")
-    private Group group;
 
     public Lesson(){
         super();
     }
 
-    public Group getGroup(){
-        return group;
+    public void setLessonId(Integer lId){
+        LessonId = lId;
     }
 
     public String getTitle() {
@@ -90,5 +81,18 @@ public class Lesson extends Model {
         this.updatedAt = updatedAt;
     }
 
+    public static List<LessonDTO> ConvertToDto(List<Lesson> list) {
+        List<LessonDTO> result = new ArrayList<>();
+        for(Lesson l : list){
+            LessonDTO lessonDTO = new LessonDTO();
+            lessonDTO.setTitle(l.getTitle());
+            lessonDTO.setBody(l.getBody());
+            lessonDTO.setGroupId(l.getGroupId());
+            lessonDTO.setUpdatedAt(l.getUpdatedAt());
+            lessonDTO.setCreatedAt(l.getCreatedAt());
+            result.add(lessonDTO);
+        }
+        return result;
+    }
 }
 

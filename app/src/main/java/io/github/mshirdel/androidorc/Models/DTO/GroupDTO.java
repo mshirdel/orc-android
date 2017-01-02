@@ -21,9 +21,16 @@ public class GroupDTO {
     @Expose
     private String updatedAt;
 
+    public GroupDTO(String groupName, long groupId){
+        name = groupName;
+        id = (int)groupId;
+    }
+
     public long getId(){
         return id;
     }
+
+
 
     public String getName() {
         return name;

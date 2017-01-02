@@ -6,13 +6,17 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.activeandroid.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.github.mshirdel.androidorc.Adapters.LessonsAdapter;
 import io.github.mshirdel.androidorc.Models.DTO.LessonDTO;
+import io.github.mshirdel.androidorc.Models.Lesson;
 import io.github.mshirdel.androidorc.R;
 import io.github.mshirdel.androidorc.Service.OrcService;
 import io.github.mshirdel.androidorc.utils.ApiUtils;
@@ -58,13 +62,40 @@ public class LessonListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<LessonDTO>> call, Response<List<LessonDTO>> response) {
                 if (response.isSuccessful()) {
-                    mAdapter.updateLessons(response.body());
+                    List<LessonDTO> lessonsInServer = response.body();
+                    try{
+                        for(LessonDTO lessonDTO : lessonsInServer){
+                            TextView log = (TextView)findViewById(R.id.tvLog);
+                            Lesson lessonInDb = new Select().from(Lesson.class).where("lesson_id = ?", lessonDTO.getId()).executeSingle();
+                            if(lessonInDb == null){
+                                Lesson newLesson = new Lesson();
+                                newLesson.setBody(lessonDTO.getBody());
+                                newLesson.setTitle(lessonDTO.getTitle());
+                                newLesson.setGroupId(lessonDTO.getGroupId());
+                                newLesson.setCreatedAt(lessonDTO.getCreatedAt());
+                                newLesson.setUpdatedAt(lessonDTO.getUpdatedAt());
+                                newLesson.setLessonId((int)lessonDTO.getId());
+                                newLesson.save();
+                            }else{
+                                log.setText("found in db");
+                            }
+                        }
+                    }catch (Exception ex){
+                        TextView log = (TextView)findViewById(R.id.tvLog);
+                        log.setText(ex.getMessage());
+                    }
+
+                    mAdapter.updateLessons(lessonsInServer);
                 }
             }
 
             @Override
             public void onFailure(Call<List<LessonDTO>> call, Throwable t) {
                 Toast.makeText(LessonListActivity.this, t.getMessage(),Toast.LENGTH_SHORT ).show();
+                Intent intent = getIntent();
+                Integer groupId = intent.getIntExtra("groupId",999);
+                List<Lesson> allGroups = new Select().from(Lesson.class).where("group_id = ?", groupId).execute();
+                mAdapter.updateLessons(Lesson.ConvertToDto(allGroups));
             }
         });
     }
