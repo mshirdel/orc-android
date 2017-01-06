@@ -31,7 +31,8 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.ViewHold
         @Override
         public void onClick(View view){
             LessonDTO lesson = getItem(getAdapterPosition());
-            this.mItemListener.onPostClick(lesson.getId());
+            int lessonId = lesson.getId();
+            this.mItemListener.onPostClick(lessonId);
 
             notifyDataSetChanged();
         }
@@ -76,6 +77,6 @@ public class LessonsAdapter extends RecyclerView.Adapter<LessonsAdapter.ViewHold
     }
 
     public interface PostItemListener {
-        void onPostClick(long id);
+        void onPostClick(int id);
     }
 }

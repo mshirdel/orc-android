@@ -7,7 +7,7 @@ public class LessonDTO {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
 
     @SerializedName("title")
     @Expose
@@ -19,7 +19,7 @@ public class LessonDTO {
 
     @SerializedName("group_id")
     @Expose
-    private Integer groupId;
+    private int groupId;
 
     @SerializedName("created_at")
     @Expose
@@ -29,8 +29,12 @@ public class LessonDTO {
     @Expose
     private String updatedAt;
 
-    public long getId(){
+    public int getId(){
         return id;
+    }
+
+    public void setId(int lessonId){
+        id = lessonId;
     }
 
     public String getTitle() {
@@ -49,11 +53,11 @@ public class LessonDTO {
         this.body = body;
     }
 
-    public Integer getGroupId() {
+    public int getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(Integer groupId) {
+    public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
 

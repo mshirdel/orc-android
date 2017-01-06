@@ -7,12 +7,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.activeandroid.app.Application">
+        android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,10 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.LessonListActivity"></activity>
+        <activity android:name=".Activity.LessonListActivity" />
 
-        <meta-data android:name="AA_DB_NAME" android:value="Orc.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="2" />
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="Orc.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="2" />
+
+        <activity android:name=".Activity.LessonActivity"></activity>
     </application>
 
 </manifest>

@@ -3,20 +3,17 @@ package io.github.mshirdel.androidorc.Models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.mshirdel.androidorc.Models.DTO.GroupDTO;
 import io.github.mshirdel.androidorc.Models.DTO.LessonDTO;
 
 @Table(name = "Lessons")
 public class Lesson extends Model {
 
     @Column(name="lesson_id")
-    private Integer LessonId;
+    private int lessonId;
 
     @Column(name="title")
     private String title;
@@ -25,7 +22,7 @@ public class Lesson extends Model {
     private String body;
 
     @Column(name="group_id")
-    private Integer groupId;
+    private int groupId;
 
     @Column(name="created_at")
     private String createdAt;
@@ -37,8 +34,12 @@ public class Lesson extends Model {
         super();
     }
 
-    public void setLessonId(Integer lId){
-        LessonId = lId;
+    public void setLessonId(int lId){
+        lessonId = lId;
+    }
+
+    public int getLessonId(){
+        return lessonId;
     }
 
     public String getTitle() {
@@ -57,11 +58,11 @@ public class Lesson extends Model {
         this.body = body;
     }
 
-    public Integer getGroupId() {
+    public int getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(Integer groupId) {
+    public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
 
@@ -85,6 +86,7 @@ public class Lesson extends Model {
         List<LessonDTO> result = new ArrayList<>();
         for(Lesson l : list){
             LessonDTO lessonDTO = new LessonDTO();
+            lessonDTO.setId(l.getLessonId());
             lessonDTO.setTitle(l.getTitle());
             lessonDTO.setBody(l.getBody());
             lessonDTO.setGroupId(l.getGroupId());

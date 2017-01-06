@@ -43,9 +43,9 @@ public class LessonListActivity extends AppCompatActivity {
         mAdapter = new LessonsAdapter(this, new ArrayList<LessonDTO>(0), new LessonsAdapter.PostItemListener() {
 
             @Override
-            public void onPostClick(long id) {
-                Toast.makeText(LessonListActivity.this, "Lesson id is" + id, Toast.LENGTH_SHORT).show();
-
+            public void onPostClick(int id) {
+                Toast.makeText(LessonListActivity.this, "Lesson id is" + Integer.toString(id), Toast.LENGTH_SHORT).show();
+                loadLessonActivity(id);
             }
         });
         RecyclerView.LayoutManager layoutManager =  new LinearLayoutManager(this);
@@ -55,6 +55,12 @@ public class LessonListActivity extends AppCompatActivity {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         mRecycleView.addItemDecoration(itemDecoration);
         loadLessons(groupId);
+    }
+
+    private void loadLessonActivity(int lessonId){
+        Intent intent = new Intent(this, LessonActivity.class);
+        intent.putExtra("lessonId", lessonId);
+        startActivity(intent);
     }
 
     private void loadLessons(Integer groupId) {
@@ -74,7 +80,7 @@ public class LessonListActivity extends AppCompatActivity {
                                 newLesson.setGroupId(lessonDTO.getGroupId());
                                 newLesson.setCreatedAt(lessonDTO.getCreatedAt());
                                 newLesson.setUpdatedAt(lessonDTO.getUpdatedAt());
-                                newLesson.setLessonId((int)lessonDTO.getId());
+                                newLesson.setLessonId(lessonDTO.getId());
                                 newLesson.save();
                             }else{
                                 log.setText("found in db");
